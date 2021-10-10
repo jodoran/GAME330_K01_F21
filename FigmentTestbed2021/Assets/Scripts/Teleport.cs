@@ -16,7 +16,8 @@ public class Teleport : MonoBehaviour
     {
         if (thePlayer.transform.position == teleportTarget.position)
         {
-            transform.rotation = Quaternion.Euler(0, 180, 0);
+            thePlayer.transform.rotation = Quaternion.Euler(0, 90, 0);
+            thePlayer.transform.position += Vector3.right;
         }
     }
 }

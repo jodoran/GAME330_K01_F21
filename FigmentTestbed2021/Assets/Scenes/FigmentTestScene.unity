@@ -1849,6 +1849,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 9d67fed5081598d4b800aa0e6aef2c8a, type: 2}
+    - target: {fileID: 23760617347734426, guid: fda7303f880e1cb40a568fffcc8d30e9,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 54251589826487816, guid: fda7303f880e1cb40a568fffcc8d30e9,
+        type: 3}
+      propertyPath: m_Mass
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 114612894580263136, guid: fda7303f880e1cb40a568fffcc8d30e9,
         type: 3}
       propertyPath: m_Enabled
