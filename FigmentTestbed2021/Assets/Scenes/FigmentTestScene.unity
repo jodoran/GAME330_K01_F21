@@ -621,7 +621,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: aa950e13734041f4f96b95f0b454c46d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.37
+      value: 0.71
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aa950e13734041f4f96b95f0b454c46d,
         type: 3}
@@ -631,7 +631,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: aa950e13734041f4f96b95f0b454c46d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.1
+      value: -4.31
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aa950e13734041f4f96b95f0b454c46d,
         type: 3}
@@ -1216,9 +1216,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 4f3ab50e0d1d4a949aca8505bbb34071, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.4
+  m_Volume: 0.15
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -3824,8 +3824,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.44721365, y: 1.2109073, z: 0.91228986}
-  m_Center: {x: 0, y: -0.45839757, z: 0.45614493}
+  m_Size: {x: 0.44721365, y: 1.4751945, z: 0.91228986}
+  m_Center: {x: 0, y: -0.5905412, z: 0.45614493}
 --- !u!114 &2021998485
 MonoBehaviour:
   m_ObjectHideFlags: 0

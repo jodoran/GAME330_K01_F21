@@ -24,7 +24,7 @@ public class PickUpObject : MonoBehaviour
             {
                 if(canpickup == true)
                 {
-                    print("Has item");
+                    print("pick up");
                     hasItem = true;
                     GetComponent<Rigidbody>().isKinematic = true;   //makes the rigidbody not be acted upon by forces
                     transform.position = myHands.transform.position; // sets the position of the object to your hand position
@@ -33,12 +33,17 @@ public class PickUpObject : MonoBehaviour
             }
             else
             {
-                print("Hi");
+                print("put down");
                 hasItem = false;
                 GetComponent<Rigidbody>().isKinematic = false; // make the rigidbody work again
                 transform.parent = null; // make the object no be a child of the hands
-                transform.position = myHands.transform.position + new Vector3(0, 1, -2);
+                transform.position = myHands.transform.position + new Vector3(0, 1, -3);
                 transform.rotation = Quaternion.Euler(-90, 0, 0);
+            }
+
+            if(hasItem == true)
+            {
+                canpickup = false;
             }
         }
         
