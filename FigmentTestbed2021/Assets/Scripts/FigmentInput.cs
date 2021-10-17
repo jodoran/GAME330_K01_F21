@@ -35,7 +35,7 @@ public class FigmentInput : MonoBehaviour {
     private KeyCode[] actionKeys = new KeyCode[] { KeyCode.Space, KeyCode.Return, KeyCode.E };
 
     // Update is called once per frame
-    void Update () 
+    void LateUpdate () 
     {
         // Only update if the mouse is not being used
         if (!Input.GetMouseButton(0))
@@ -48,12 +48,20 @@ public class FigmentInput : MonoBehaviour {
             UpdateButtonStateFromKeyboard(FigmentButton.RightButton, rightKeys);
             UpdateButtonStateFromKeyboard(FigmentButton.ActionButton, actionKeys);
         }
+        else
+        {
+            FigmentButtonPressedLastFrame[0] = FigmentButtonPressed[0];
+            FigmentButtonPressedLastFrame[1] = FigmentButtonPressed[1];
+            FigmentButtonPressedLastFrame[2] = FigmentButtonPressed[2];
+        }
     }
 
     public void PressButton(int buttonType)
     {
         // Unfortunately have to use an int due to Unity's UI rules
         FigmentButtonPressed[buttonType] = true;
+
+
 
         if (FigmentButtonPressedLastFrame[(int)buttonType] != true)
         {
@@ -67,6 +75,7 @@ public class FigmentInput : MonoBehaviour {
         {
             OnButtonHold((FigmentButton)buttonType);
         }
+
     }
 
     void UpdateButtonStateFromKeyboard(FigmentButton buttonType, KeyCode[] keyboardKeys)
