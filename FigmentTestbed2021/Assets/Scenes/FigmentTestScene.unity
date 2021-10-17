@@ -266,6 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myHands: {fileID: 1238809287}
+  hasItem: 0
 --- !u!1 &70978753
 GameObject:
   m_ObjectHideFlags: 0
@@ -2371,19 +2372,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1633883556}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1238809288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1238809287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2630825a15e5db40811f86e2a4e8422, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myHands: {fileID: 1238809287}
 --- !u!114 &1238809293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2835,7 +2823,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.81048816, y: 1, z: 1}
-  m_Center: {x: 1.47718, y: 0, z: 0}
+  m_Center: {x: 0.95, y: 0, z: 0}
 --- !u!23 &1580581126
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2899,6 +2887,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teleportTarget: {fileID: 1793778910}
   thePlayer: {fileID: 1238809287}
+  teleportOffset: {x: 1, y: 0, z: 0}
 --- !u!1 &1594421610
 GameObject:
   m_ObjectHideFlags: 0
@@ -3059,6 +3048,10 @@ PrefabInstance:
     - target: {fileID: 1077755958732762, guid: fda7303f880e1cb40a568fffcc8d30e9, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205158277045776, guid: fda7303f880e1cb40a568fffcc8d30e9, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 1731523848467674, guid: fda7303f880e1cb40a568fffcc8d30e9, type: 3}
       propertyPath: m_TagString
@@ -3602,6 +3595,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teleportTarget: {fileID: 1580581124}
   thePlayer: {fileID: 1238809287}
+  teleportOffset: {x: -1, y: 0, z: 0}
 --- !u!65 &1793778912
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3614,7 +3608,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.0733119, y: 0.89517754, z: 1}
-  m_Center: {x: -1.5033247, y: -0.052410927, z: 0}
+  m_Center: {x: -1.09, y: -0.052410927, z: 0}
 --- !u!23 &1793778913
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3845,6 +3839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myHands: {fileID: 1238809287}
+  hasItem: 0
 --- !u!1 &2049061151
 GameObject:
   m_ObjectHideFlags: 0

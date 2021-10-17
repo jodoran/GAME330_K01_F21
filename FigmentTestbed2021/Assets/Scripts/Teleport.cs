@@ -6,20 +6,18 @@ public class Teleport : MonoBehaviour
 {
     public Transform teleportTarget;
     public GameObject thePlayer;
+    public Vector3 teleportOffset;
 
     void OnTriggerEnter(Collider other)
     {
-        thePlayer.transform.position = teleportTarget.transform.position;
+        // If it's the player or an object that the player isn't holding
+        if (other.CompareTag("Player"))
+        {
+            print("Teleport");
+            other.transform.position = teleportTarget.transform.position + teleportOffset;
+        }
+        
     }
 
-    void Update()
-    {
-        if (thePlayer.transform.position == teleportTarget.position)
-        {
-            thePlayer.transform.rotation = Quaternion.Euler(0, 90, 0);
-            thePlayer.transform.position = thePlayer.transform.position+ Vector3.right*Time.deltaTime;
-            
-        }
-    }
 }
 

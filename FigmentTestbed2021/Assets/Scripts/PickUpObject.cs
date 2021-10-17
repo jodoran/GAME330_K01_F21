@@ -6,8 +6,7 @@ public class PickUpObject : MonoBehaviour
 {
     public GameObject myHands; //reference to your hands/the position where you want your object to go
     bool canpickup; //a bool to see if you can or cant pick up the item
-    GameObject ObjectToPickUp; // the gameobject onwhich you collided with
-    bool hasItem; // a bool to see if you have an item in your hand
+    public bool hasItem; // a bool to see if you have an item in your hand
     // Start is called before the first frame update
     void Start()
     {
@@ -18,31 +17,38 @@ public class PickUpObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canpickup == true) // if you enter thecollider of the objecct
+
+        if (FigmentInput.GetButtonDown(FigmentInput.FigmentButton.ActionButton))
         {
-            if (FigmentInput.GetButton(FigmentInput.FigmentButton.ActionButton) && hasItem == false)
+            if(hasItem == false)
             {
-                hasItem = true;
-                ObjectToPickUp.GetComponent<Rigidbody>().isKinematic = true;   //makes the rigidbody not be acted upon by forces
-                ObjectToPickUp.transform.position = myHands.transform.position; // sets the position of the object to your hand position
-                ObjectToPickUp.transform.parent = GameObject.Find("Player").transform; //makes the object become a child of the parent so that it moves with the hands
+                if(canpickup == true)
+                {
+                    print("Has item");
+                    hasItem = true;
+                    GetComponent<Rigidbody>().isKinematic = true;   //makes the rigidbody not be acted upon by forces
+                    transform.position = myHands.transform.position; // sets the position of the object to your hand position
+                    transform.parent = GameObject.Find("Player").transform; //makes the object become a child of the parent so that it moves with the hands
+                }
+            }
+            else
+            {
+                print("Hi");
+                hasItem = false;
+                GetComponent<Rigidbody>().isKinematic = false; // make the rigidbody work again
+                transform.parent = null; // make the object no be a child of the hands
+                transform.position = myHands.transform.position + new Vector3(0, 1, -2);
+                transform.rotation = Quaternion.Euler(-90, 0, 0);
             }
         }
-
-        if (FigmentInput.GetButton(FigmentInput.FigmentButton.ActionButton) && hasItem == true) // if you have an item and get the key to remove the object, again can be any key
-        {
-            hasItem = false;
-            ObjectToPickUp.GetComponent<Rigidbody>().isKinematic = false; // make the rigidbody work again
-            //ObjectToPickUp.transform.parent = null; // make the object no be a child of the hands
-        }
+        
 
     }
     private void OnTriggerEnter(Collider other) // to see when the player enters the collider
     {
-        if(other.gameObject.tag == "Object") //on the object you want to pick up set the tag to be anything, in this case "object"
+        if(other.gameObject.tag == "Player") //on the object you want to pick up set the tag to be anything, in this case "object"
         {
             canpickup = true;  //set the pick up bool to true
-            ObjectToPickUp = other.gameObject; //set the gameobject you collided with to one you can reference
         }
     }
     private void OnTriggerExit(Collider other)
