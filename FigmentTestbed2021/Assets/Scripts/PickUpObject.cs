@@ -8,6 +8,7 @@ public class PickUpObject : MonoBehaviour
     bool canpickup; //a bool to see if you can or cant pick up the item
     public bool hasItem; // a bool to see if you have an item in your hand
     public AudioSource Blop;
+    public int degree;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,10 @@ public class PickUpObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (hasItem == true)
+        {
+            canpickup = false;
+        }
 
         if (FigmentInput.GetButtonDown(FigmentInput.FigmentButton.ActionButton))
         {
@@ -34,20 +39,18 @@ public class PickUpObject : MonoBehaviour
                     Blop.Play();
                 }
             }
-            else
+            else if(hasItem ==true)
             {
                 print("put down");
                 hasItem = false;
                 GetComponent<Rigidbody>().isKinematic = false; // make the rigidbody work again
                 transform.parent = null; // make the object no be a child of the hands
+                
                 transform.position = myHands.transform.position + new Vector3(0, 1, -3);
-                transform.rotation = Quaternion.Euler(-90, 0, 0);
+                transform.rotation = Quaternion.Euler(degree, 0, 0);
             }
 
-            if(hasItem == true)
-            {
-                canpickup = false;
-            }
+            
         }
         
 
@@ -58,6 +61,22 @@ public class PickUpObject : MonoBehaviour
         {
             canpickup = true;  //set the pick up bool to true
         }
+
+        if(other.gameObject.tag=="Table"||other.gameObject.tag=="Stove")
+        {
+            if (hasItem == false)
+            {
+                transform.position = other.transform.position + new Vector3(0, 3.5f, 0);
+
+            }
+
+            else 
+            {
+
+            }
+        }
+
+        
     }
     private void OnTriggerExit(Collider other)
     {

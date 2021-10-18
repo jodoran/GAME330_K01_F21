@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Portal
   - Object
+  - Stove
+  - Bean
+  - Sugar
+  - PickUp
   layers:
   - Default
   - TransparentFX
