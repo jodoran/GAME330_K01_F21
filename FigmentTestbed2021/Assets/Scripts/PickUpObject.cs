@@ -5,7 +5,7 @@ using UnityEngine;
 public class PickUpObject : MonoBehaviour
 {
     public GameObject myHands; //reference to your hands/the position where you want your object to go
-    bool canpickup; //a bool to see if you can or cant pick up the item
+    public bool canpickup; //a bool to see if you can or cant pick up the item
     public bool hasItem; // a bool to see if you have an item in your hand
     public AudioSource Blop;
     public int degree;
@@ -38,6 +38,11 @@ public class PickUpObject : MonoBehaviour
                     transform.parent = GameObject.Find("Player").transform; //makes the object become a child of the parent so that it moves with the hands
                     Blop.Play();
                 }
+
+                else if(canpickup==false)
+                {
+                    hasItem = false;
+                }
             }
             else if(hasItem ==true)
             {
@@ -55,18 +60,21 @@ public class PickUpObject : MonoBehaviour
         
 
     }
-    private void OnTriggerEnter(Collider other) // to see when the player enters the collider
+    private void OnTriggerStay(Collider other) // to see when the player enters the collider
     {
         if(other.gameObject.tag == "Player") //on the object you want to pick up set the tag to be anything, in this case "object"
         {
-            canpickup = true;  //set the pick up bool to true
+            
+                canpickup = true;  //set the pick up bool to true
+            
+
         }
 
         if(other.gameObject.tag=="Table"||other.gameObject.tag=="Stove")
         {
             if (hasItem == false)
             {
-                transform.position = other.transform.position + new Vector3(0, 3.5f, 0);
+                transform.position = other.transform.position + new Vector3(0, 3.4f, 0);
 
             }
 
@@ -75,6 +83,8 @@ public class PickUpObject : MonoBehaviour
 
             }
         }
+
+        
 
         
     }

@@ -10,6 +10,9 @@ TagManager:
   - Bean
   - Sugar
   - PickUp
+  - Table
+  - BeanBox
+  - Bowl
   layers:
   - Default
   - TransparentFX

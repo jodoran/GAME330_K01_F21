@@ -5,9 +5,15 @@ using UnityEngine;
 
 public class PotManager : MonoBehaviour
 {
+    //public Transform Pot;
+    
     public ProgressBar potProgressBar;
-    public float progressToAdd = 0.5f;
+    public ProgressBar bar1;
+    public ProgressBar bar2;
+    public float progressToAdd = 0.1f;
     public GameObject sugarWarning;
+    public GameObject sw1;
+    public GameObject sw2;
     public GameObject emptyPot;
     public GameObject fullPot;
     public GameObject burnPot;
@@ -16,10 +22,13 @@ public class PotManager : MonoBehaviour
     bool yesSugar;
     bool makeEmpty;
     bool burnt;
+    public bool done;
+    bool speedUp;
 
     // Start is called before the first frame update
     void Start()
     {
+        
         potProgressBar.gameObject.SetActive(false);
         sugarWarning.gameObject.SetActive(false);
         emptyPot.SetActive(true);
@@ -32,18 +41,31 @@ public class PotManager : MonoBehaviour
         yesSugar = false;
         makeEmpty = false;
         burnt = false;
+        done = false;
+        speedUp = false;
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (done == false)
+        {
+            GetComponent<PickUpObject>().canpickup = false;
+
+        }
+        else if (done == true)
+        {
+
+        }
 
         if (onStove && yesBean)
         {
+            
             potProgressBar.gameObject.SetActive(true);
             IsBoiling();
-
+            
         }
 
         if (yesBean && !yesSugar)
@@ -51,9 +73,16 @@ public class PotManager : MonoBehaviour
             sugarWarning.SetActive(true);
         }
 
-        if(!onStove)
+        if (!onStove || GetComponent<PickUpObject>().hasItem == true)
         {
+            potProgressBar.progressGoingUp = false;
             potProgressBar.gameObject.SetActive(false);
+            sugarWarning.SetActive(false);
+            
+        }
+
+        if(yesSugar)
+        {
             sugarWarning.SetActive(false);
         }
 
@@ -63,14 +92,31 @@ public class PotManager : MonoBehaviour
             {
                 emptyPot.SetActive(true);
                 fullPot.SetActive(false);
+                burnPot.SetActive(false);
                 yesBean = false;
                 yesSugar = false;
+                potProgressBar.ReStart();
             }
 
             else if (!makeEmpty)
             {
 
             }
+
+            if(speedUp==true)
+            {
+                progressToAdd = 0.3f;
+            }
+
+            else if(!speedUp)
+            {
+                progressToAdd = 0.1f;
+            }
+        }
+
+        if(FigmentInput.GetButtonUp(FigmentInput.FigmentButton.ActionButton))
+        {
+            progressToAdd = 0.1f;
         }
 
         if (burnt == true)
@@ -80,12 +126,15 @@ public class PotManager : MonoBehaviour
             burnPot.SetActive(true);
             potProgressBar.gameObject.SetActive(false);
             sugarWarning.SetActive(false);
+            
         }
 
         else if (burnt == false)
         {
             burnPot.SetActive(false);
         }
+
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -106,36 +155,64 @@ public class PotManager : MonoBehaviour
 
         }
 
-        if (other.gameObject.CompareTag("PickUp"))
+        if (other.gameObject.CompareTag("Bowl"))
         {
-            makeEmpty = true;
+            if (burnt == false)
+            {
+                makeEmpty = true;
+            }
+
+            else if(burnt==true)
+            {
+                makeEmpty = false;
+            }
         }
 
         if (other.gameObject.CompareTag("Stove"))
         {
-            onStove = true;
-            Debug.Log("OnStove");
+            if (GetComponent<PickUpObject>().hasItem == false)
+            {
+                onStove = true;
+                Debug.Log("OnStove");
+
+                if (other.gameObject.name == "Stove1")
+                {
+                    potProgressBar = bar1;
+                    sugarWarning = sw1;
+                }
+
+                else if (other.gameObject.name == "Stove2")
+                {
+                    potProgressBar = bar2;
+                    sugarWarning = sw2;
+                }
+            }
+
+            else if (GetComponent<PickUpObject>().hasItem == false)
+            {
+
+            }
+
         }
 
+        if (other.gameObject.CompareTag("Player"))
+        {
+            speedUp = true;
+        }
 
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.tag=="Sugar")
-        {
-            yesSugar = false;
-            
-        }
-
-        if(other.gameObject.tag=="Bean")
-        {
-            yesBean = false;
-        }
-
+        
         if (other.gameObject.CompareTag("Stove"))
         {
             onStove = false;
+        }
+
+        if (other.gameObject.CompareTag("Player"))
+        {
+            speedUp = false;
         }
 
     }
@@ -145,10 +222,24 @@ public class PotManager : MonoBehaviour
         potProgressBar.AddProgressToBar(progressToAdd);
         if (potProgressBar.barSlider.value >= potProgressBar.barSlider.maxValue)
         {
+            if (done == false)
+            {
+                potProgressBar.barSlider.value = 0;
+
+                potProgressBar.ChangeColor();
+                progressToAdd = 0.3f;
+                done = true;
+            }
             
-            burnt = true;
+            else if (done==true)
+            {
+                burnt = true;
+                potProgressBar.gameObject.SetActive(false);
+            }
+
         }
     }
+
 
 }
 
