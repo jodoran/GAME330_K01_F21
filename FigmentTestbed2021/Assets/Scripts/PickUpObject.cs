@@ -31,6 +31,7 @@ public class PickUpObject : MonoBehaviour
                     GetComponent<Rigidbody>().isKinematic = true;   //makes the rigidbody not be acted upon by forces
                     transform.position = myHands.transform.position; // sets the position of the object to your hand position
                     transform.parent = GameObject.Find("Player").transform; //makes the object become a child of the parent so that it moves with the hands
+                    Blop.Play();
                 }
             }
             else
