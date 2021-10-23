@@ -6,7 +6,7 @@ using UnityEngine;
 public class PotManager : MonoBehaviour
 {
     //public Transform Pot;
-    
+
     public ProgressBar potProgressBar;
     public ProgressBar bar1;
     public ProgressBar bar2;
@@ -22,19 +22,22 @@ public class PotManager : MonoBehaviour
     bool yesSugar;
     bool makeEmpty;
     bool burnt;
+    //public bool destroyThis=false;
+    public bool startAgain = false;
     public bool done;
     bool speedUp;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        //bar1 = ProgressBar.FindObjectOfType<ProgressBar>();
+
         potProgressBar.gameObject.SetActive(false);
         sugarWarning.gameObject.SetActive(false);
         emptyPot.SetActive(true);
         fullPot.SetActive(false);
         burnPot.SetActive(false);
-        
+
 
         this.gameObject.GetComponent<PickUpObject>();
         yesBean = false;
@@ -50,6 +53,16 @@ public class PotManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(startAgain==true)
+        {
+            ReStart();
+        }
+        
+        /*if(destroyThis==true)
+        {
+            Destroy(this.gameObject);
+        }*/
+
         if (done == false)
         {
             GetComponent<PickUpObject>().canpickup = false;
@@ -62,10 +75,10 @@ public class PotManager : MonoBehaviour
 
         if (onStove && yesBean)
         {
-            
+
             potProgressBar.gameObject.SetActive(true);
             IsBoiling();
-            
+
         }
 
         if (yesBean && !yesSugar)
@@ -78,10 +91,10 @@ public class PotManager : MonoBehaviour
             potProgressBar.progressGoingUp = false;
             potProgressBar.gameObject.SetActive(false);
             sugarWarning.SetActive(false);
-            
+
         }
 
-        if(yesSugar)
+        if (yesSugar)
         {
             sugarWarning.SetActive(false);
         }
@@ -103,18 +116,18 @@ public class PotManager : MonoBehaviour
 
             }
 
-            if(speedUp==true)
+            if (speedUp == true)
             {
                 progressToAdd = 0.3f;
             }
 
-            else if(!speedUp)
+            else if (!speedUp)
             {
                 progressToAdd = 0.1f;
             }
         }
 
-        if(FigmentInput.GetButtonUp(FigmentInput.FigmentButton.ActionButton))
+        if (FigmentInput.GetButtonUp(FigmentInput.FigmentButton.ActionButton))
         {
             progressToAdd = 0.1f;
         }
@@ -126,7 +139,7 @@ public class PotManager : MonoBehaviour
             burnPot.SetActive(true);
             potProgressBar.gameObject.SetActive(false);
             sugarWarning.SetActive(false);
-            
+
         }
 
         else if (burnt == false)
@@ -134,18 +147,18 @@ public class PotManager : MonoBehaviour
             burnPot.SetActive(false);
         }
 
-        
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag=="Sugar")
+        if (other.gameObject.tag == "Sugar")
         {
             yesSugar = true;
             Destroy(other.gameObject);
         }
 
-        if(other.gameObject.tag=="Bean")
+        if (other.gameObject.tag == "Bean")
         {
             Debug.Log("BeanIn");
             yesBean = true;
@@ -162,7 +175,7 @@ public class PotManager : MonoBehaviour
                 makeEmpty = true;
             }
 
-            else if(burnt==true)
+            else if (burnt == true)
             {
                 makeEmpty = false;
             }
@@ -204,7 +217,7 @@ public class PotManager : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        
+
         if (other.gameObject.CompareTag("Stove"))
         {
             onStove = false;
@@ -230,14 +243,27 @@ public class PotManager : MonoBehaviour
                 progressToAdd = 0.3f;
                 done = true;
             }
-            
-            else if (done==true)
+
+            else if (done == true)
             {
                 burnt = true;
                 potProgressBar.gameObject.SetActive(false);
             }
 
         }
+    }
+
+    public void ReStart()
+    {
+        potProgressBar.gameObject.SetActive(false);
+        sugarWarning.gameObject.SetActive(false);
+        emptyPot.SetActive(true);
+        fullPot.SetActive(false);
+        burnPot.SetActive(false);
+        yesBean = false;
+        yesSugar = false;
+        potProgressBar.ReStart();
+
     }
 
 

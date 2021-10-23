@@ -13,6 +13,7 @@ public class PickUpObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        myHands = GameObject.FindWithTag("Player");
         canpickup = false;
         hasItem = false;
     }
