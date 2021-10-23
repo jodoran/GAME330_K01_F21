@@ -12,12 +12,47 @@ public class GameManager : MonoBehaviour
     public GameObject pot1;
     public GameObject pot2;
     public GameObject sugar;
+    public GameObject emptybowl;
+    public GameObject ice;
+    public GameObject icebean;
+    public GameObject icebeanricecake;
+
+    private int modelNumber;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        modelNumber = 1;
         replayButton.SetActive(false);
         //MainProgressBar.GetComponent<Slider>().value = timeLeft;
+    }
+
+    void ModelSwitch()
+    {
+        if(modelNumber == 1)
+        {
+            emptybowl.SetActive(false);
+            ice.SetActive(true);
+            modelNumber = 2;
+        }
+        else if (modelNumber == 2)
+        {
+            ice.SetActive(false);
+            icebean.SetActive(true);
+            modelNumber = 3;
+        }
+        else if (modelNumber == 3)
+        {
+            icebean.SetActive(false);
+            icebeanricecake.SetActive(true);
+            modelNumber = 4;
+        }
+        else if (modelNumber == 4)
+        {
+            icebeanricecake.SetActive(false);
+            emptybowl.SetActive(true);
+            modelNumber = 1;
+        }
     }
 
     // Update is called once per frame
@@ -40,6 +75,11 @@ public class GameManager : MonoBehaviour
         if (GameObject.FindGameObjectsWithTag("Sugar").Length == 0)
         {
             Instantiate(sugar, new Vector3(5000,4,3), Quaternion.identity);
+        }
+
+        if (FigmentInput.GetButtonDown(FigmentInput.FigmentButton.ActionButton))
+        {
+            ModelSwitch();
         }
 
     }

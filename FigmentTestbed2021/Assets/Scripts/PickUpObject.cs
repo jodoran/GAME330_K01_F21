@@ -9,6 +9,7 @@ public class PickUpObject : MonoBehaviour
     public bool hasItem; // a bool to see if you have an item in your hand
     public AudioSource Blop;
     public int degree;
+    int itemCount = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,7 @@ public class PickUpObject : MonoBehaviour
             {
                 if(canpickup == true)
                 {
+                    itemCount++;
                     print("pick up");
                     hasItem = true;
                     GetComponent<Rigidbody>().isKinematic = true;   //makes the rigidbody not be acted upon by forces
@@ -40,12 +42,8 @@ public class PickUpObject : MonoBehaviour
                     Blop.Play();
                 }
 
-                else if(canpickup==false)
-                {
-                    hasItem = false;
-                }
             }
-            else if(hasItem ==true)
+            else if(hasItem ==true) //&& gameObject.CompareTag("Table")//
             {
                 print("put down");
                 hasItem = false;
