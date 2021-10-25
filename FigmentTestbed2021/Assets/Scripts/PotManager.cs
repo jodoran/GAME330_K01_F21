@@ -43,7 +43,7 @@ public class PotManager : MonoBehaviour
         fullPot.SetActive(false);
         burnPot.SetActive(false);
 
-
+        this.gameObject.GetComponent<GameManager>();
         this.gameObject.GetComponent<PickUpObject>();
         yesBean = false;
         yesSugar = false;
@@ -198,6 +198,7 @@ public class PotManager : MonoBehaviour
             if (burnt == false)
             {
                 makeEmpty = true;
+                GetComponent<GameManager>().modelNumber = 2;
             }
 
             else if (burnt == true)

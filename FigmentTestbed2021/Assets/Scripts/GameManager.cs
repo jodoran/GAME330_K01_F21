@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public int frame=5;
     public int burnpoint;
 
-    private int modelNumber;
+    public int modelNumber;
 
     // Start is called before the first frame update
     void Start()

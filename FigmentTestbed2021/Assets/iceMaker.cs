@@ -10,11 +10,14 @@ public class iceMaker : MonoBehaviour
     public float progressToAdd = 0.2f;
     public bool grinding;
     public GameObject DoneIce;
+
+
     // Start is called before the first frame update
     void Start()
     {
         iceProgressBar.gameObject.SetActive(false);
         grinding = false;
+        this.gameObject.GetComponent<GameManager>();
 
     }
 
@@ -27,6 +30,7 @@ public class iceMaker : MonoBehaviour
         {
             ice = true;
             grinding = false;
+            GetComponent<GameManager>().modelNumber = 1;
         }
         else if(iceProgressBar.barSlider.value ==0)
         {
