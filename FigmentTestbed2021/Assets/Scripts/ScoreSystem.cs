@@ -8,7 +8,7 @@ public class ScoreSystem : MonoBehaviour
     // Update is called once per frame
     void OnTriggerEnter(Collider col)
     {
-        if (FigmentInput.GetButtonDown(FigmentInput.FigmentButton.ActionButton) && col.gameObject.tag == "Bowl")
+        if (col.gameObject.tag == "Bowl")
         {
             print("Score");
             ScoreText.scoreValue += 10;
