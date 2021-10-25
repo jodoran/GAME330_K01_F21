@@ -21,18 +21,18 @@ public class GameManager : MonoBehaviour
     public int frame=5;
     public int burnpoint;
 
-    private int modelNumber;
+    //private int modelNumber;
 
     // Start is called before the first frame update
     void Start()
     {
-        modelNumber = 1;
+        //modelNumber = 1;
         replayButton.SetActive(false);
         gameoverText.SetActive(false);
         //MainProgressBar.GetComponent<Slider>().value = timeLeft;
     }
 
-    void ModelSwitch()
+    /*void ModelSwitch()
     {
         if(modelNumber == 1)
         {
@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
             emptybowl.SetActive(true);
             modelNumber = 1;
         }
-    }
+    }*/
 
     // Update is called once per frame
     void Update()
@@ -82,10 +82,10 @@ public class GameManager : MonoBehaviour
             Instantiate(sugar, new Vector3(5000,4,3), Quaternion.identity);
         }
 
-        if (FigmentInput.GetButtonDown(FigmentInput.FigmentButton.ActionButton))
-        {
-            ModelSwitch();
-        }
+        //if (FigmentInput.GetButtonDown(FigmentInput.FigmentButton.ActionButton))
+        //{
+            //ModelSwitch();
+        //}
 
 
         GameObject[] pots = GameObject.FindGameObjectsWithTag("Pot");

@@ -16,6 +16,9 @@ TagManager:
   - Pot
   - Ice
   - Milk
+  - IceMaker
+  - RiceCake
+  - Hands
   layers:
   - Default
   - TransparentFX

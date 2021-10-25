@@ -10,6 +10,7 @@ public class iceMaker : MonoBehaviour
     public float progressToAdd = 0.2f;
     public bool grinding;
     public GameObject DoneIce;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -43,20 +44,37 @@ public class iceMaker : MonoBehaviour
         //    grinding = true;
        // }
        
-        if(grinding)
+        if(grinding==true)
         {
             iceProgressBar.gameObject.SetActive(true);
-            iceProgressBar.AddProgressToBar(progressToAdd);
-            progressToAdd = 0.3f;
+            Grinding();
+            progressToAdd = 1.0f;
+
+            DoneIce.GetComponent<PickUpObject>().enabled = false;
+            Debug.Log("Grinding");
+        }
+
+        else if(grinding==false)
+        {
+            progressToAdd = 0.0f;
+            iceProgressBar.progressGoingUp = false;
+            //Debug.Log("GrindingFalse");
         }
        
     }
 
-    public void Reset()
+    public void Grinding()
+    {
+        iceProgressBar.AddProgressToBar(progressToAdd);
+
+    }
+
+    void Reset()
     {
         iceProgressBar.barSlider.value = 0;
         iceProgressBar.gameObject.SetActive(false);
         grinding = false;
+        Debug.Log("IceReset");
     }
 
 
@@ -70,12 +88,18 @@ public class iceMaker : MonoBehaviour
                 if (FigmentInput.GetButtonDown(FigmentInput.FigmentButton.ActionButton))
                 {
                     Reset();
+                    Debug.Log("No ice");
                 }
+            }
+            else if(ice==false)
+            {
+
             }
 
             else if (grinding)
             {
                 
+
                 if (FigmentInput.GetButtonDown(FigmentInput.FigmentButton.ActionButton))
                 {
                     
@@ -91,33 +115,33 @@ public class iceMaker : MonoBehaviour
         if (other.gameObject.CompareTag("Milk"))
         {
 
-            if (FigmentInput.GetButtonDown(FigmentInput.FigmentButton.ActionButton))
-            {
-                if (!grinding && !ice)
+            
+                if (!grinding && !ice )
                 {
                     
                     Destroy(other);
-                    Instantiate(DoneIce, this.transform.position + new Vector3(0, 0, 0), Quaternion.identity);
+                    Instantiate(DoneIce, new Vector3(5006, 2.8f, -4.7f), Quaternion.identity);
                     grinding = true;
+                    Debug.Log("Grind");
                 }
 
                 else
                 {
 
                 }
-            }
+            
         }
 
-        if(other.gameObject.CompareTag("Ice"))
+        if(other.gameObject.CompareTag("Bowl")|| other.gameObject.CompareTag("Ice"))
         {
             if (ice == true)
             {
-                other.GetComponent<PickUpObject>().enabled = true;
+                other.GetComponent<PickUpObject>().canpickup = true;
             }
 
             else
             {
-                other.GetComponent<PickUpObject>().enabled = false;
+                other.GetComponent<PickUpObject>().canpickup = false;
             }
         }
     }

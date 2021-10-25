@@ -58,7 +58,22 @@ public class PotManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(startAgain==true)
+        if (makeEmpty)
+        {
+            emptyPot.SetActive(true);
+            fullPot.SetActive(false);
+            burnPot.SetActive(false);
+            yesBean = false;
+            yesSugar = false;
+            potProgressBar.ReStart();
+        }
+
+        else if (!makeEmpty)
+        {
+
+        }
+
+        if (startAgain==true)
         {
             ReStart();
         }
@@ -109,20 +124,7 @@ public class PotManager : MonoBehaviour
         {
             if (FigmentInput.GetButtonDown(FigmentInput.FigmentButton.ActionButton))
             {
-                if (makeEmpty)
-                {
-                    emptyPot.SetActive(true);
-                    fullPot.SetActive(false);
-                    burnPot.SetActive(false);
-                    yesBean = false;
-                    yesSugar = false;
-                    potProgressBar.ReStart();
-                }
-
-                else if (!makeEmpty)
-                {
-
-                }
+                
 
                 if (speedUp == true)
                 {
@@ -198,6 +200,7 @@ public class PotManager : MonoBehaviour
             if (burnt == false)
             {
                 makeEmpty = true;
+                
             }
 
             else if (burnt == true)
