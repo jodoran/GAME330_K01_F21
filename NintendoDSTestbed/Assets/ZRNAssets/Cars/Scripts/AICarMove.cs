@@ -8,7 +8,8 @@ public class AICarMove : MonoBehaviour {
 	[SerializeField]
 	GameObject[] targetNavMeshObjects;
 	int targetNavMeshObjectCounts;
-	int targetNavMeshObjectNow;
+	public int targetNavMeshObjectNow;
+	bool start=false;
 
 	Vector3 startPos;
 	Vector3 startRot;
@@ -24,51 +25,54 @@ public class AICarMove : MonoBehaviour {
 		startRot = targetNavMeshObjects[0].transform.localEulerAngles;
 		targetNavMeshObjectCounts = targetNavMeshObjects.Length -1;
 
+		targetNavMeshObjectNow = 1;
+		InitAICar();
+
 	}
 
 	public void InitAICar () {
 
-		navMeshAgentCompornent.speed = 0.0f;
+		//navMeshAgentCompornent.speed = 0.0f;
 		targetAICar.GetComponent<Animation>().Play("00_Stop");
-		StartCoroutine(startCar(3.0f));
-
+		//navMeshAgentCompornent.speed = CAR_SPEED_MAX;
+		start = true;
+		
+		
 	}
 
-	IEnumerator startCar (float startDelayTime) {
 
-		navMeshAgentCompornent.speed = 0.0f;
-		targetAICar.GetComponent<Animation>().Play("00_Stop");
-		yield return new WaitForSeconds(startDelayTime);
-
-		// Set destination
-		targetNavMeshObjectNow = 1;
-		navMeshAgentCompornent.SetDestination(targetNavMeshObjects[targetNavMeshObjectNow].transform.localPosition);
-		this.transform.localPosition = startPos;
-		this.transform.localEulerAngles = startRot;
-
-		yield return new WaitForSeconds(0.5f);
-		navMeshAgentCompornent.speed = CAR_SPEED_MAX;
-		targetAICar.GetComponent<Animation>().Play("01_Run");
-
-	}
 
 	
 	// Update is called once per frame
 	void Update () {
 
-		if (navMeshAgentCompornent.remainingDistance < 0.1f)
+		if (start==true)
+		{// Set destination
+			
+			navMeshAgentCompornent.SetDestination(targetNavMeshObjects[targetNavMeshObjectNow].transform.position);
+			
+			
+			targetAICar.GetComponent<Animation>().Play("01_Run");
+		}
+
+		if (navMeshAgentCompornent.remainingDistance < 0.01f)
 		{
 			targetNavMeshObjectNow ++;
 			if (targetNavMeshObjectNow <= targetNavMeshObjectCounts)
 			{
-				navMeshAgentCompornent.SetDestination(targetNavMeshObjects[targetNavMeshObjectNow].transform.localPosition);
+				navMeshAgentCompornent.SetDestination(targetNavMeshObjects[targetNavMeshObjectNow].transform.position);
 			}
 			else if (targetNavMeshObjectNow >  targetNavMeshObjectCounts)
 			{
-				targetNavMeshObjectNow = 1;
-				navMeshAgentCompornent.SetDestination(targetNavMeshObjects[targetNavMeshObjectNow].transform.localPosition);
+				targetNavMeshObjectNow = 0;
+				navMeshAgentCompornent.SetDestination(targetNavMeshObjects[targetNavMeshObjectNow].transform.position);
 			}
 		}
+
+		else if (navMeshAgentCompornent.remainingDistance >= 0.01f)
+        {
+
+        }
 	
 	}
 }
