@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6863205207228727549}
   m_Layer: 0
   m_Name: RiceCake
-  m_TagString: Object
+  m_TagString: RiceCake
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -254,6 +254,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7849268929617644440, guid: d9c4d17ecdc43264caf45ca09151d21f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ecc2842d9aede5743a87909283d8fa13, type: 2}
     - target: {fileID: 919132149155446097, guid: d9c4d17ecdc43264caf45ca09151d21f,
         type: 3}
       propertyPath: m_Name
