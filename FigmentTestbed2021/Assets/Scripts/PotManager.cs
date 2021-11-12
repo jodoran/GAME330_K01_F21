@@ -43,7 +43,7 @@ public class PotManager : MonoBehaviour
         fullPot.SetActive(false);
         burnPot.SetActive(false);
 
-
+        this.gameObject.GetComponent<GameManager>();
         this.gameObject.GetComponent<PickUpObject>();
         yesBean = false;
         yesSugar = false;
@@ -58,22 +58,7 @@ public class PotManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (makeEmpty)
-        {
-            emptyPot.SetActive(true);
-            fullPot.SetActive(false);
-            burnPot.SetActive(false);
-            yesBean = false;
-            yesSugar = false;
-            potProgressBar.ReStart();
-        }
-
-        else if (!makeEmpty)
-        {
-
-        }
-
-        if (startAgain==true)
+        if(startAgain==true)
         {
             ReStart();
         }
@@ -124,7 +109,20 @@ public class PotManager : MonoBehaviour
         {
             if (FigmentInput.GetButtonDown(FigmentInput.FigmentButton.ActionButton))
             {
-                
+                if (makeEmpty)
+                {
+                    emptyPot.SetActive(true);
+                    fullPot.SetActive(false);
+                    burnPot.SetActive(false);
+                    yesBean = false;
+                    yesSugar = false;
+                    potProgressBar.ReStart();
+                }
+
+                else if (!makeEmpty)
+                {
+
+                }
 
                 if (speedUp == true)
                 {
@@ -200,7 +198,7 @@ public class PotManager : MonoBehaviour
             if (burnt == false)
             {
                 makeEmpty = true;
-                
+                GetComponent<GameManager>().modelNumber = 2;
             }
 
             else if (burnt == true)
