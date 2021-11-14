@@ -25,7 +25,7 @@ public class AICarMove : MonoBehaviour {
 		startRot = targetNavMeshObjects[0].transform.localEulerAngles;
 		targetNavMeshObjectCounts = targetNavMeshObjects.Length -1;
 
-		targetNavMeshObjectNow = 1;
+		targetNavMeshObjectNow = 0;
 		InitAICar();
 
 	}
@@ -57,6 +57,7 @@ public class AICarMove : MonoBehaviour {
 
 		if (navMeshAgentCompornent.remainingDistance < 0.01f)
 		{
+            Debug.Log("next target");
 			targetNavMeshObjectNow ++;
 			if (targetNavMeshObjectNow <= targetNavMeshObjectCounts)
 			{
