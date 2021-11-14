@@ -6,5 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/FigmentMenuScene.unity
+    guid: 015c42fbd739feb46b922db0f7bd9908
+  - enabled: 1
     path: Assets/Scenes/FigmentTestScene.unity
     guid: 94fc6c6919f5c7f40be81baf4ddb5791
+  m_configObjects: {}
