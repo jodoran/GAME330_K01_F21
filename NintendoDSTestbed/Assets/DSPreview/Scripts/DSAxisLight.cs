@@ -23,7 +23,7 @@ public class DSAxisLight : MonoBehaviour
         bool overThreshold = false;
         if(CheckPositive)
         {
-            overThreshold = axisValue > DeadZoneValue;
+            overThreshold = axisValue >= DeadZoneValue;
         }
         else
         {
