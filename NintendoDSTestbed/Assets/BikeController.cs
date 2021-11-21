@@ -135,6 +135,9 @@ public class BikeController : MonoBehaviour
     private float Reverse_pitch;
     private float Forward_pitch;
 
+    public Transform myTransformGO;
+    public float returnSpeed=0.1f;
+
     //Hidden Variables
     [HideInInspector] public float currSpeed;
 
@@ -398,6 +401,45 @@ public class BikeController : MonoBehaviour
 
     public void Update()
     {
+        if (Input.GetButtonDown("Fire3"))
+        {
+            Debug.Log("GetUp");
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        
+        float angleX = myTransformGO.rotation.eulerAngles.x;
+        float angleY = myTransformGO.rotation.eulerAngles.y;
+        float angleZ = myTransformGO.rotation.eulerAngles.z;
+
+        if (-30 <=angleZ || angleZ <30)
+        {
+
+        }
+
+        if (angleZ>=30)
+        {
+            transform.Rotate(0, 0, -returnSpeed);
+        }
+
+        if (angleZ<-30)
+        {
+            transform.Rotate(0, 0, returnSpeed);
+        }
+
+        if (angleX >= 30)
+        {
+            transform.Rotate(-returnSpeed, 0, 0);
+        }
+
+        if (angleX < -30)
+        {
+            transform.Rotate(returnSpeed, 0, 0);
+        }
+
+        if (-30 <= angleZ || angleZ < 30)
+        {
+
+        }
 
         //Rotating The Wheels So They Don't Slide
         var pos = Vector3.zero;
