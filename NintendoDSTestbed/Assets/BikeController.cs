@@ -416,24 +416,25 @@ public class BikeController : MonoBehaviour
 
         }
 
-        if (angleZ>=30)
+        if (angleZ>=0)
         {
             transform.Rotate(0, 0, -returnSpeed);
         }
 
-        if (angleZ<-30)
+        if (angleZ<0)
         {
             transform.Rotate(0, 0, returnSpeed);
         }
 
-        if (angleX >= 30)
+        if (angleX >= 0)
         {
             transform.Rotate(-returnSpeed, 0, 0);
         }
 
-        if (angleX < -30)
+        if (angleX < 0)
         {
             transform.Rotate(returnSpeed, 0, 0);
+            Debug.Log("to 0");
         }
 
         if (-30 <= angleZ || angleZ < 30)
