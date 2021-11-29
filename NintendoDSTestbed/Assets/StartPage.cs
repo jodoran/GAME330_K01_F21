@@ -24,8 +24,11 @@ public class StartPage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
 
+
+
+        if (Input.GetKey("escape"))
+            Application.Quit();
     }
 
     public void GameStart()
@@ -44,6 +47,12 @@ public class StartPage : MonoBehaviour
         
         arrow.SetActive(true);
         startpage.SetActive(false);
+    }
+
+    public void Exit()
+    {
+        Debug.Log("Exit");
+        Application.Quit();
     }
 
     

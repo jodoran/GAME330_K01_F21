@@ -7,6 +7,8 @@ using TMPro;
 
 public class BikeController : MonoBehaviour
 {
+    bool onGround;
+    public int jumpHeight;
     public Transform StartPosition;
     //Public Variables
     [Header("Wheel Colliders")]
@@ -139,8 +141,12 @@ public class BikeController : MonoBehaviour
     public Transform myTransformGO;
     public float returnSpeed=0.1f;
 
+    //private Rigidbody rb;
     //Hidden Variables
     [HideInInspector] public float currSpeed;
+
+    public float NumberJumps = 0f;
+    public float MaxJumps = 2;
 
     void Start()
     {
@@ -267,32 +273,7 @@ public class BikeController : MonoBehaviour
         Car_Speed_In_KPH = (int)Car_Speed_KPH;
         Car_Speed_In_MPH = (int)Car_Speed_MPH;
 
-        //Showing Car Speed
-        /*if (Use_Default_UI)
-        {
-            if (Show_Speed_In_KPH)
-            {
-                Speed_Text_UI.text = Car_Speed_In_KPH.ToString();
-            }
-
-            if (!Show_Speed_In_KPH)
-            {
-                Speed_Text_UI.text = Car_Speed_In_MPH.ToString();
-            }
-        }
-
-        if (Use_TMP)
-        {
-            if (Show_Speed_In_KPH)
-            {
-                Speed_Text_TMPPro.SetText(Car_Speed_In_KPH.ToString());
-            }
-
-            if (!Show_Speed_In_KPH)
-            {
-                Speed_Text_TMPPro.SetText(Car_Speed_In_MPH.ToString());
-            }
-        }*/
+        
 
         //Make Car Boost
         if (Input.GetKey(KeyCode.LeftShift))
@@ -402,8 +383,20 @@ public class BikeController : MonoBehaviour
 
     public void Update()
     {
-        
-        
+        if (NumberJumps > MaxJumps - 1)
+        {
+            onGround = false;
+        }
+
+        if (onGround)
+        {
+            if (Input.GetButtonDown("Jump"))
+            {
+                rb.AddForce(Vector3.up * jumpHeight);
+                NumberJumps += 1;
+            }
+        }
+
         float angleX = myTransformGO.rotation.eulerAngles.x;
         float angleY = myTransformGO.rotation.eulerAngles.y;
         float angleZ = myTransformGO.rotation.eulerAngles.z;
@@ -462,27 +455,8 @@ public class BikeController : MonoBehaviour
         //Make Car Brake
         if (Input.GetKey(KeyCode.Space) == true)
         {
-            Brakes = BrakeForce;
-
-            //Set the Current Gear to B
-            Current_Gear = "B";
-
-            //Turn on brake lights
-            if (Enable_Brakelights_Lights)
-            {
-                foreach (Light L in BrakeLights)
-                {
-                    L.enabled = true;
-                }
-            }
-
-            if (Enable_Brakelights_MeshRenderers)
-            {
-                foreach (MeshRenderer BM in BrakeLights_MeshRenderers)
-                {
-                    BM.enabled = true;
-                }
-            }
+            
+        
 
             //Drifting and changing wheel collider values
             if (Set_Drift_Settings_Automatically)
@@ -536,7 +510,8 @@ public class BikeController : MonoBehaviour
 
         if (!Input.GetKey(KeyCode.Space))
         {
-            //Turn off brake lights
+            
+            /*//Turn off brake lights
             if (Enable_Brakelights_Lights)
             {
                 foreach (Light L in BrakeLights)
@@ -551,7 +526,7 @@ public class BikeController : MonoBehaviour
                 {
                     BM.enabled = false;
                 }
-            }
+            }*/
         }
 
 
@@ -693,6 +668,19 @@ public class BikeController : MonoBehaviour
 
     }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        //if (collision.gameObject.tag =="Ground")
+        {
+            onGround = true;
+            NumberJumps = 0;
+        }
+    }
+
+    void OnCollisionExit(Collision other)
+    {
+
+    }
     public void StartButtonOn()
     {
         
