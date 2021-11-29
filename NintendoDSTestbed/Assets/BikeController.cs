@@ -7,6 +7,7 @@ using TMPro;
 
 public class BikeController : MonoBehaviour
 {
+    public Transform StartPosition;
     //Public Variables
     [Header("Wheel Colliders")]
     public WheelCollider FL;
@@ -260,7 +261,7 @@ public class BikeController : MonoBehaviour
         RPM_BL = BL.rpm;
 
         //Changing speed of the car
-        Car_Speed_KPH = Car_Rigidbody.velocity.magnitude * 3.6f;
+        Car_Speed_KPH = Car_Rigidbody.velocity.magnitude * 1f;
         Car_Speed_MPH = Car_Rigidbody.velocity.magnitude * 2.237f;
 
         Car_Speed_In_KPH = (int)Car_Speed_KPH;
@@ -401,15 +402,17 @@ public class BikeController : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetButtonDown("Fire3"))
-        {
-            Debug.Log("GetUp");
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
+        
         
         float angleX = myTransformGO.rotation.eulerAngles.x;
         float angleY = myTransformGO.rotation.eulerAngles.y;
         float angleZ = myTransformGO.rotation.eulerAngles.z;
+
+        if (Input.GetButtonDown("Fire3"))
+        {
+            Debug.Log("GetUp");
+            transform.rotation = Quaternion.Euler(0, angleY, 0);
+        }
 
         if (-30 <=angleZ || angleZ <30)
         {
@@ -688,5 +691,14 @@ public class BikeController : MonoBehaviour
             }
         }
 
+    }
+
+    public void StartButtonOn()
+    {
+        
+        Debug.Log("StartGame");
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        transform.position = StartPosition.position;
+        
     }
 }

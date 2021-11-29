@@ -21,14 +21,14 @@ public class AtYourServiceButton : MonoBehaviour, IDSTapListener
     // Update is called once per frame
     void Update()
     {
-        const float SNAP_SPEED = 24.0f;
+        /*const float SNAP_SPEED = 24.0f;
         Vector2 currPosition = TopScreenImage.rectTransform.anchoredPosition;
         currPosition.x += (TargetXValue - currPosition.x) * SNAP_SPEED * Time.deltaTime;
         TopScreenImage.rectTransform.anchoredPosition = currPosition;
 
         currPosition = BottomScreenImage.rectTransform.anchoredPosition;
         currPosition.x += (TargetXValue - currPosition.x) * SNAP_SPEED * Time.deltaTime;
-        BottomScreenImage.rectTransform.anchoredPosition = currPosition;
+        BottomScreenImage.rectTransform.anchoredPosition = currPosition;*/
     }
 
     public void OnScreenTapDown(Vector2 tapPosition)

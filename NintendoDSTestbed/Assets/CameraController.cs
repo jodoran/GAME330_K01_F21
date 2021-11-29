@@ -17,7 +17,18 @@ public class CameraController : MonoBehaviour
 
 	private Vector3 rotationVector;
 
-	void LateUpdate()
+    private void Start()
+    {
+		car = GameObject.FindWithTag("TargetCar").transform;
+		carposition = GameObject.FindWithTag("TargetCar").transform;
+	}
+
+	public void StartGame()
+    {
+		car = GameObject.FindWithTag("Player").transform;
+		carposition = GameObject.FindWithTag("TargetPosition").transform;
+	}
+    void LateUpdate()
 	{
 		float wantedAngle = rotationVector.y;
 		float wantedHeight = car.position.y + height;
