@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/NintendoDSTestbed.unity
+    path: Assets/Scenes/NintendoDS_Menu.unity
+    guid: a6b7157ca8b0b1946bf37d8d3e4dbb40
+  - enabled: 1
+    path: Assets/Scenes/NintendoDS_Game.unity
     guid: 07b5e427c20c30b4493be962adb5afc4
   m_configObjects: {}
