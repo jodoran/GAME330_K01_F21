@@ -10,6 +10,11 @@ public class StartPage : MonoBehaviour
     public GameObject fade;
     public bool black=false;
     public Color color;
+
+    public AudioClip s1;
+    public AudioClip s2;
+
+    public Camera cam;
     //public Camera screenCamera;
     
     // Start is called before the first frame update
@@ -19,6 +24,10 @@ public class StartPage : MonoBehaviour
         arrow.SetActive(false);
         color=fade.GetComponent<Image>().color;
         color.a = 0;
+
+        AudioSource audiosource = cam.GetComponent<AudioSource>();
+        audiosource.clip = s1;
+        audiosource.Play();
     }
 
     // Update is called once per frame
@@ -33,6 +42,8 @@ public class StartPage : MonoBehaviour
 
     public void GameStart()
     {
+        cam.GetComponent<AudioSource>().clip = s2;
+        cam.GetComponent<AudioSource>().Play();
 
         color.a++;
         if (color.a == 255.0f)
