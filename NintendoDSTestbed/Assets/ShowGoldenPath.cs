@@ -7,6 +7,7 @@ public class ShowGoldenPath : MonoBehaviour
     private NavMeshPath path;
     private float elapsed = 0.0f;
     public LineRenderer lineRenderer;
+    public float loadTime;
 
     void Start()
     {
@@ -18,10 +19,10 @@ public class ShowGoldenPath : MonoBehaviour
     {
         // Update the way to the goal every second.
         elapsed += Time.deltaTime;
-        if (elapsed > 1.0f)
+        if (elapsed > loadTime)
         {
             print("hi");
-            elapsed -= 1.0f;
+            elapsed -= loadTime;
             bool result = NavMesh.CalculatePath(transform.position, target.position, NavMesh.AllAreas, path);
             print(result);
             lineRenderer.SetVertexCount(path.corners.Length);
