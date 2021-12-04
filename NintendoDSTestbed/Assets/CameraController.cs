@@ -14,19 +14,23 @@ public class CameraController : MonoBehaviour
 	public float heightDamping = 2.0f;
 	public float zoomRatio = 0.5f;
 	public float defaultFOV = 60f;
+	public string target;
 
 	private Vector3 rotationVector;
 
     private void Start()
     {
+		StartPage();
+	}
+	public void StartPage()
+    {
 		car = GameObject.FindWithTag("TargetCar").transform;
 		carposition = GameObject.FindWithTag("TargetCar").transform;
 	}
-
 	public void StartGame()
     {
 		car = GameObject.FindWithTag("Player").transform;
-		carposition = GameObject.FindWithTag("TargetPosition").transform;
+		carposition = GameObject.FindWithTag(target).transform;
 	}
     void LateUpdate()
 	{
