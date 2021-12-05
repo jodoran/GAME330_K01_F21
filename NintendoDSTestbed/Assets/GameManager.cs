@@ -7,6 +7,7 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject startpage;
     public GameObject endPrefab;
     public TextMeshProUGUI currentTimeText;
     public TextMeshProUGUI resultTimeText;
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
     public GameObject pausePage;
     public GameObject Player;
     public GameObject EndPoint;
+    public GameObject Help;
     private void Start()
     {
         endPrefab.SetActive(false);
@@ -32,6 +34,7 @@ public class GameManager : MonoBehaviour
         resultTimeText.enabled = false;
         newRecordText.enabled = false;
         highestRecordText.enabled = false;
+        Help.SetActive(false);
     }
     void Update()
     {
@@ -83,6 +86,18 @@ public class GameManager : MonoBehaviour
             //highestRecordText.text = "Highest Record:" + PlayerPrefs.GetFloat("shortestTime").ToString();
             highestRecordText.text = "Highest Record:" + TimeSpan.FromSeconds(PlayerPrefs.GetFloat("shortestTime")).ToString(@"mm\:ss\:ff");
         }
+    }
+
+    public void HelpOn()
+    {
+        Help.SetActive(true);
+        startpage.GetComponent<StartPage>().startpage.SetActive(false);
+    }
+
+    public void HelpOff()
+    {
+        Help.SetActive(false);
+        startpage.GetComponent<StartPage>().startpage.SetActive(true);
     }
     public void StartTimer()
     {
