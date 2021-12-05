@@ -6,12 +6,28 @@ using UnityEngine;
 public class ScreenTapPrinter : MonoBehaviour, IDSTapListener
 {
     public Camera screenCamera;
+    private bool CanDrop = true;
+    public SpriteRenderer PlayerRenderer;
+    public Color disabledColor = Color.cyan;
 
     public void OnScreenTapDown(Vector2 tapPosition)
     {
         Debug.Log("ScreenTapDown at " + tapPosition);
 
-        GetWorldInfo(tapPosition);
+        if (CanDrop == true)
+        {
+            GetWorldInfo(tapPosition);
+            CanDrop = false;
+            PlayerRenderer.color = disabledColor;
+            Invoke("EnableDrop", 1f);
+        }
+
+    }
+
+    void EnableDrop()
+    {
+        CanDrop = true;
+        PlayerRenderer.color = Color.white;
     }
 
     public GameObject ball;
@@ -38,14 +54,25 @@ public class ScreenTapPrinter : MonoBehaviour, IDSTapListener
     public void OnScreenDrag(Vector2 tapPosition)
     {
         Debug.Log("OnScreenDrag: " + tapPosition);
-        GetWorldInfo(tapPosition);
-
+        if (CanDrop == true)
+        {
+            GetWorldInfo(tapPosition);
+            CanDrop = false;
+            PlayerRenderer.color = disabledColor;
+            Invoke("EnableDrop", 1f);
+        }
 
     }
 
     public void OnScreenTapUp(Vector2 tapPosition)
     {
         Debug.Log("ScreenTapUp at " + tapPosition);
-        GetWorldInfo(tapPosition);
+        if (CanDrop == true)
+        {
+            GetWorldInfo(tapPosition);
+            CanDrop = false;
+            PlayerRenderer.color = disabledColor;
+            Invoke("EnableDrop", 1f);
+        }
     }
 }

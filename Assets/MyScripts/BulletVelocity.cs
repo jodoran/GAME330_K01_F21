@@ -5,20 +5,29 @@ using UnityEngine;
 public class BulletVelocity : MonoBehaviour
 {
     //The velocity
-    public Vector3 BulletVelocity1;
 	private GameObject FireballMovementInput;
 	private Rigidbody PlayerRB;
 	private Rigidbody BulletRB;
-
-
+	private Animator PlayerAnim;
+	private float Speed = 10;
 
 	void Start()
     {
+		PlayerAnim = GameObject.Find("PlayerCharacter").GetComponent<Animator>();
 		FireballMovementInput = GameObject.Find("PlayerCharacter");
 		PlayerRB = FireballMovementInput.GetComponent<Rigidbody>();
 		BulletRB = GetComponent<Rigidbody>();
-		//BulletVelocity1 = BulletRB.velocity;
+		BulletRB.velocity = new Vector3(PlayerAnim.GetFloat("MovementX"), PlayerAnim.GetFloat("MovementY"), 0).normalized * Speed;
 	}
+
+	void OnTriggerEnter(Collider other)
+    {
+		if (other.gameObject.tag == "Slime")
+		{
+			Destroy(gameObject);
+		}
+	}
+
 	void Awake()
 	{
 		
@@ -27,7 +36,6 @@ public class BulletVelocity : MonoBehaviour
 	void FixedUpdate()
 	{
 
-		//GetComponent<Rigidbody>().velocity = PlayerRB.velocity;
-		BulletRB.velocity = PlayerRB.velocity * 5;
+		
 	}
 }

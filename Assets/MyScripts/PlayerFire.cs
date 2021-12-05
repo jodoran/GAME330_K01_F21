@@ -18,7 +18,7 @@ public class PlayerFire : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (FireballFired == false)
             {
@@ -26,7 +26,7 @@ public class PlayerFire : MonoBehaviour
                 Physics.IgnoreCollision(g.GetComponent<BoxCollider>(), GetComponent<BoxCollider>());
                 audioSource.PlayOneShot(shoot, 0.1f);
                 FireballFired = true;
-                Invoke("resetFireballFired", 1f);
+                Invoke("resetFireballFired", 0.2f);
             }
         }
     }
