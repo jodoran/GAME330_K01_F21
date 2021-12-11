@@ -43,6 +43,7 @@ public class StartPage : MonoBehaviour
         line.SetActive(false);
         Title.SetActive(true);
 
+
         cam.GetComponent<AudioSource>().clip = s1;
         cam.GetComponent<AudioSource>().Play();
 

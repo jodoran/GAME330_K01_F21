@@ -7,7 +7,9 @@ using TMPro;
 
 public class BikeController : MonoBehaviour
 {
+    public GameManager gameManager;
     bool onGround;
+    public int maxAngle;
     public int jumpHeight;
     public Transform StartPosition;
     //Public Variables
@@ -50,10 +52,12 @@ public class BikeController : MonoBehaviour
     [Header("Audio Settings (Beta)")]
     public bool Enable_Audio;
     public AudioSource Engine_Sound;
-    public float Max_Engine_Audio_Pitch;
-    public float Min_Engine_Audio_Pitch;
-    public float Min_Volume;
-    public float Max_Volume;
+    public AudioSource Idle_Sound;
+    public AudioSource Crash_Sound;
+    public AudioClip engine;
+    public AudioClip idle;
+    public AudioClip crash;
+    
 
     [Header("Drift Settings")]
     public bool Set_Drift_Settings_Automatically = true;
@@ -132,11 +136,7 @@ public class BikeController : MonoBehaviour
     int Car_Speed_In_KPH;
     int Car_Speed_In_MPH;
 
-    //Private Audio Variables
-    private float Forward_volume;
-    private float Reverse_volume;
-    private float Reverse_pitch;
-    private float Forward_pitch;
+    
 
     public Transform myTransformGO;
     public float returnSpeed=0.1f;
@@ -150,6 +150,18 @@ public class BikeController : MonoBehaviour
 
     void Start()
     {
+        Crash_Sound.volume = 0;
+        Crash_Sound.clip = crash;
+        Engine_Sound.clip = engine;
+        Idle_Sound.clip = idle;
+
+        Engine_Sound.Play();
+        Idle_Sound.Play();
+
+        Engine_Sound.volume = 0;
+        Idle_Sound.volume = 0;
+
+
         //To Prevent The Car From Toppling When Turning Too Much
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = Center_of_Mass.localPosition;
@@ -275,20 +287,13 @@ public class BikeController : MonoBehaviour
 
         
 
-        //Make Car Boost
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            //Setting The Motor Torque To The Boost Torque
-            Motor_Torque = Boost_Motor_Torque;
-        }
-
-        else
-        {
+        
             //Setting The Motor Torque Back To Normal;
             Motor_Torque = Motor_Torque_Normal;
-        }
+        
 
         //Make Car Drift
+        /*
         WheelHit wheelHit1;
         WheelHit wheelHit3;
 
@@ -378,7 +383,7 @@ public class BikeController : MonoBehaviour
                     RM.enabled = false;
                 }
             }
-        }
+        }*/
     }
 
     public void Update()
@@ -412,12 +417,12 @@ public class BikeController : MonoBehaviour
 
         }
 
-        if (angleZ>=0)
+        if (angleZ>=maxAngle)
         {
             transform.Rotate(0, 0, -returnSpeed);
         }
 
-        if (angleZ<0)
+        if (angleZ<-maxAngle)
         {
             transform.Rotate(0, 0, returnSpeed);
         }
@@ -433,7 +438,7 @@ public class BikeController : MonoBehaviour
             Debug.Log("to 0");
         }
 
-        if (-30 <= angleZ || angleZ < 30)
+        if (-maxAngle <= angleZ || angleZ < maxAngle)
         {
 
         }
@@ -530,150 +535,45 @@ public class BikeController : MonoBehaviour
         }
 
 
-        if (Enable_Audio == true)
+
+
+        //Play Car Audio
+        if ((Input.GetAxis("Vertical")>0.0f || Input.GetAxis("Vertical") < 0.0f) &&gameManager.watchActive==true)
         {
-            //Play Car Audio
-            if (Input.GetKey(KeyCode.W))
-            {
-                //Play Engine Sound
-                Engine_Sound.Play();
+            
+            
+            Engine_Sound.volume = Engine_Sound.volume + 0.1f;
+            Idle_Sound.volume = Idle_Sound.volume - 0.2f;
 
-                //Adjust Engine Sound Volume To Car Motor Torque
-                Forward_volume = -1f * (Motor_Torque / BL.motorTorque);
 
-                //Adjust Engine Speed
-                Forward_pitch = -1f * (BL.motorTorque / Motor_Torque);
+        }
 
-                if (Forward_volume > Max_Volume)
-                {
-                    Forward_volume = Max_Volume;
-
-                    if (Forward_pitch > Max_Engine_Audio_Pitch)
-                    {
-                        Forward_pitch = Max_Engine_Audio_Pitch;
-
-                        Engine_Sound.volume = Forward_volume;
-                        Engine_Sound.pitch = Forward_pitch;
-                    }
-
-                    if (Forward_pitch < Min_Engine_Audio_Pitch)
-                    {
-                        Forward_pitch = Min_Engine_Audio_Pitch;
-
-                        Engine_Sound.volume = Forward_volume;
-                        Engine_Sound.pitch = Forward_pitch;
-                    }
-
-                    else
-                    {
-                        Engine_Sound.volume = Forward_volume;
-                        Engine_Sound.pitch = Forward_pitch;
-                    }
-                }
-
-                if (Forward_volume < Min_Volume)
-                {
-                    Forward_volume = Min_Volume;
-
-                    if (Forward_pitch > Max_Engine_Audio_Pitch)
-                    {
-                        Forward_pitch = Max_Engine_Audio_Pitch;
-
-                        Engine_Sound.volume = Forward_volume;
-                        Engine_Sound.pitch = Forward_pitch;
-                    }
-
-                    if (Forward_pitch < Min_Engine_Audio_Pitch)
-                    {
-                        Forward_pitch = Min_Engine_Audio_Pitch;
-
-                        Engine_Sound.volume = Forward_volume;
-                        Engine_Sound.pitch = Forward_pitch;
-                    }
-
-                    else
-                    {
-                        Engine_Sound.volume = Forward_volume;
-                        Engine_Sound.pitch = Forward_pitch;
-                    }
-                }
-            }
-
-            if (Input.GetKey(KeyCode.S))
-            {
-                //Play Engine Sound
-                Engine_Sound.Play();
-
-                //Adjust Engine Sound Volume To Car Motor Torque
-                Reverse_volume = Motor_Torque / BL.motorTorque;
-
-                //Adjust Audio To Engine Speed
-                Reverse_pitch = -1f * (BL.motorTorque / Motor_Torque);
-
-                if (Forward_volume > Max_Volume)
-                {
-                    Forward_volume = Max_Volume;
-
-                    if (Forward_pitch > Max_Engine_Audio_Pitch)
-                    {
-                        Forward_pitch = Max_Engine_Audio_Pitch;
-
-                        Engine_Sound.volume = Forward_volume;
-                        Engine_Sound.pitch = Forward_pitch;
-                    }
-
-                    if (Forward_pitch < Min_Engine_Audio_Pitch)
-                    {
-                        Forward_pitch = Min_Engine_Audio_Pitch;
-
-                        Engine_Sound.volume = Forward_volume;
-                        Engine_Sound.pitch = Forward_pitch;
-                    }
-
-                    else
-                    {
-                        Engine_Sound.volume = Forward_volume;
-                        Engine_Sound.pitch = Forward_pitch;
-                    }
-                }
-
-                if (Forward_volume < Min_Volume)
-                {
-                    Forward_volume = Min_Volume;
-
-                    if (Forward_pitch > Max_Engine_Audio_Pitch)
-                    {
-                        Forward_pitch = Max_Engine_Audio_Pitch;
-
-                        Engine_Sound.volume = Forward_volume;
-                        Engine_Sound.pitch = Forward_pitch;
-                    }
-
-                    if (Forward_pitch < Min_Engine_Audio_Pitch)
-                    {
-                        Forward_pitch = Min_Engine_Audio_Pitch;
-
-                        Engine_Sound.volume = Forward_volume;
-                        Engine_Sound.pitch = Forward_pitch;
-                    }
-
-                    else
-                    {
-                        Engine_Sound.volume = Forward_volume;
-                        Engine_Sound.pitch = Forward_pitch;
-                    }
-                }
-            }
+        if (Input.GetAxis("Vertical") == 0 && gameManager.watchActive==true)
+        {
+            
+            
+            Engine_Sound.volume = Engine_Sound.volume - 0.2f;
+            Idle_Sound.volume = Idle_Sound.volume + 0.1f;
+        }
+        
+        if (gameManager.watchActive==true)
+        {
+            Crash_Sound.volume = 1;
         }
 
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        //if (collision.gameObject.tag =="Ground")
+        if (collision.gameObject.tag =="Ground")
         {
             onGround = true;
             NumberJumps = 0;
+        }
+
+        if (collision.gameObject.tag != "Ground"&&gameManager.watchActive==true)
+        {
+            Crash_Sound.PlayOneShot(crash);
         }
     }
 
@@ -685,7 +585,7 @@ public class BikeController : MonoBehaviour
     {
         
         Debug.Log("StartGame");
-        transform.rotation = Quaternion.Euler(0, 0, 0);
+        transform.rotation = Quaternion.Euler(0, 180, 0);
         transform.position = StartPosition.position;
         
     }

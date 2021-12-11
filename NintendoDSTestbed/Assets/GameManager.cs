@@ -86,6 +86,15 @@ public class GameManager : MonoBehaviour
             //highestRecordText.text = "Highest Record:" + PlayerPrefs.GetFloat("shortestTime").ToString();
             highestRecordText.text = "Highest Record:" + TimeSpan.FromSeconds(PlayerPrefs.GetFloat("shortestTime")).ToString(@"mm\:ss\:ff");
         }
+
+        if (watchActive==false)
+        {
+            Player.GetComponent<BikeController>().enabled = false;
+        }
+        if (watchActive==true)
+        {
+            Player.GetComponent<BikeController>().enabled = true;
+        }
     }
 
     public void HelpOn()
@@ -148,6 +157,7 @@ public class GameManager : MonoBehaviour
         Reset_Timer();
         StartTimer();
         Player.GetComponent<BikeController>().StartButtonOn();
+        
     }
 
     private void Reset_Timer()
